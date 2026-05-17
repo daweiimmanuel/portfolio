@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>David Immanuel — Operator & Builder, Jakarta</title>
-  <meta name="description" content="Demand Planner & Business Specialist at APP's Specialty Paper BU. Building Pintas — a stablecoin settlement rail for Indonesian exporters." />
+  <title>David Immanuel — Financial Analyst, Operator & Builder, Jakarta</title>
+  <meta name="description" content="Financial analyst and operator with experience in financial modelling, investment analysis, demand planning, and product economics across banking, FMCG, and fintech. Based in Jakarta." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -498,8 +498,8 @@ window.PORTFOLIO_CONTENT = {
     name: "David Immanuel",
     location: "Jakarta, Indonesia",
     initials: "DI",
-    headline: "Operator and builder. RevOps, product, and fintech across nine-figure books.",
-    sub: "Demand Planner & Business Specialist at Asia Pulp & Paper's Specialty Paper BU. Building Pintas — a stablecoin settlement rail for Indonesian exporters.",
+    headline: "Financial analyst and operator. Modelling, planning, and product economics across nine-figure books.",
+    sub: "Demand Planner & Business Specialist at Asia Pulp & Paper's Specialty Paper BU — managing a nine-figure USD export book across 10 regions. Financial modelling background across banking, retail expansion, and listed-equity investment cases. Building Pintas on the side.",
     email: "david.immanuel@example.com",
     linkedin: "https://www.linkedin.com/in/david-im-manuel/",
     github: "https://github.com/daweiimmanuel",
@@ -510,13 +510,13 @@ window.PORTFOLIO_CONTENT = {
     { value: "9-figure", unit: "USD",       label: "export book under plan" },
     { value: "10",       unit: "regions",   label: "global market coverage" },
     { value: "98%",      unit: "reduction", label: "switching-cost framework, PermataBank" },
-    { value: "1",        unit: "rail",      label: "founder-track: Pintas settlement" },
+    { value: "4×",       unit: "EV uplift",  label: "investment proposal, CDI (IDX: CDIA)" },
   ],
 
   about: [
-    "I run demand planning for a nine-figure USD export book across ten regions at Asia Pulp & Paper's Specialty Paper business unit, reporting to the Sales Director. Day to day I sit between commercial, supply, and finance — translating market signal into commitments the mill can ship against.",
-    "Before APP I was at PermataBank in the Digital Business division. Management was seeing high transfer costs against flat DAU growth — I dug into the transaction data, found that ~98% of switching cost was concentrated in interbank transfers, and traced it to a pattern where transfer volume was being used to top up GoPay e-wallets via CIMB virtual account codes. That finding became the basis for a switching-cost elimination framework that drove a 98% cost reduction and double-digit billion IDR in OPEX savings. Earlier I implemented enterprise software at IBM Indonesia. CS undergrad at Bina Nusantara, MBA at Prasetiya Mulya (Top 5, GPA 3.74) — the dual training is the edge I keep leaning on.",
-    "On the side I'm building Pintas: a B2B cross-border settlement rail using stablecoin infrastructure to replace the SWIFT leg between USD endpoints for Indonesian exporters. Born in Semarang, based in Jakarta.",
+    "I run demand planning for a nine-figure USD export book across ten regions at Asia Pulp & Paper's Specialty Paper business unit, reporting to the Sales Director. Day to day I sit between commercial, supply, and finance — building the forecasting models, variance trackers, and market intelligence tools the team runs its numbers on.",
+    "My financial modelling work spans cost structure analysis (PermataBank — transaction cost decomposition that found a hidden OPEX driver and drove 98% switching-cost reduction), procurement TCO models (EDC fleet upgrade, ATM Phase 2 tender), retail expansion P&L (Love Bonito market entry — GO recommendation), and listed-equity investment proposals (CDI / CDIA on IDX — 4× EV multiple uplift thesis). I also built the ATM footprint analysis down to Kelurahan level, overlaying competitor locations and customer density for branch network decisions.",
+    "CS undergrad at Bina Nusantara, MBA at Prasetiya Mulya (Top 5, GPA 3.74). Earlier I implemented enterprise software at IBM Indonesia. On the side I'm building Pintas — a stablecoin settlement rail for Indonesian exporters. Born in Semarang, based in Jakarta.",
   ],
 
   experience: [
@@ -638,15 +638,18 @@ window.PORTFOLIO_CONTENT = {
 
   capabilities: {
     strategy: {
-      label: "Strategy & Analysis",
+      label: "Financial Analysis & Strategy",
       items: [
+        "Financial modelling (P&L, TCO, DCF)",
+        "Investment thesis & EV analysis",
+        "Scenario & sensitivity analysis",
+        "Unit economics & cost decomposition",
+        "Market sizing & competitive benchmarking",
+        "Procurement & tender cost modelling",
         "Switching-cost frameworks",
-        "Unit economics",
-        "Market sizing & segmentation",
-        "Croston / SBA forecasting",
-        "FVA (Forecast Value Add)",
-        "Commercial review design",
         "Pricing & margin analysis",
+        "Croston / SBA demand forecasting",
+        "FVA (Forecast Value Add)",
       ],
     },
     build: {
@@ -667,9 +670,10 @@ window.PORTFOLIO_CONTENT = {
         "Demand planning at 9-figure scale",
         "10-region S&OP cadence",
         "Cross-functional with sales / supply / finance",
+        "ATM & EDC infrastructure programme management",
+        "Spatial footprint analysis (Kelurahan-level)",
         "Founder-track fundraising (Antler, Iterative, YC)",
         "Stablecoin settlement architecture",
-        "B2B partner onboarding",
       ],
     },
   },
@@ -1054,7 +1058,7 @@ function Nav({ person }) {
         <span className="nav-mark">{person.initials}</span>
         <span className="nav-brand-name">{person.name}</span>
         <span className="nav-brand-divider" />
-        <span className="nav-brand-role muted">Operator · Jakarta</span>
+        <span className="nav-brand-role muted">Analyst & Operator · Jakarta</span>
       </a>
       <div className="nav-links">
         {links.map(([id, label]) => (
@@ -1084,7 +1088,7 @@ function Hero({ person, metrics }) {
       <div className="hero-grid">
         <div className="hero-eyebrow">
           <span className="hero-dot" />
-          <span>Available for senior operator / founding roles · Q3 26</span>
+          <span>Open to financial analyst, operator & founding roles · Q3 26</span>
         </div>
         <h1 className="hero-name">{person.name}<span className="hero-comma">,</span></h1>
         <p className="hero-headline">{person.headline}</p>
@@ -1139,6 +1143,11 @@ function About({ paragraphs }) {
               <span>Now</span>
               <b>Demand Planner & Business Specialist</b>
               <span className="muted">Asia Pulp & Paper · Specialty Paper BU</span>
+            </div>
+            <div className="about-card-kv">
+              <span>Modelling</span>
+              <b>TCO · P&L · EV · Scenario</b>
+              <span className="muted">Banking · Retail · Listed equity</span>
             </div>
             <div className="about-card-kv">
               <span>Building</span>
@@ -1675,7 +1684,7 @@ function Contact({ person }) {
       <SectionHeader number="06" label="Contact" />
       <div className="contact-grid">
         <div className="contact-prose">
-          <h3 className="contact-headline">Looking for senior operator, RevOps, product, or founder-track conversations.</h3>
+          <h3 className="contact-headline">Open to financial analyst, investment, senior operator, and founder-track conversations.</h3>
           <p className="muted">Best reached over email. I read everything; I reply to most.</p>
           <div className="contact-actions">
             <button className="btn btn-primary" onClick={copy}>
