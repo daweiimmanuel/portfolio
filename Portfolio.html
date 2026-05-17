@@ -1,0 +1,1703 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>David Immanuel — Operator & Builder, Jakarta</title>
+  <meta name="description" content="Demand Planner & Business Specialist at APP's Specialty Paper BU. Building Pintas — a stablecoin settlement rail for Indonesian exporters." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+/* ───────────────────────────────────────────────────────────────────────────
+   David Immanuel — portfolio styles
+   ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --sans:    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --mono:    "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --accent: #1f7a6b;
+}
+
+:root[data-theme="dark"] {
+  --bg:           #0a0a0a;
+  --bg-elev:      #111111;
+  --bg-card:      #131313;
+  --bg-card-hov:  #181818;
+  --bg-frame:     #0e0e0e;
+  --border:       #1f1f1f;
+  --border-soft:  #1a1a1a;
+  --border-strong:#2a2a2a;
+  --border-hov:   #353535;
+  --text:         #ededed;
+  --text-mid:     #b3b3b3;
+  --text-muted:   #8a8a8a;
+  --text-dim:     #5f5f5f;
+  --accent-soft:  color-mix(in oklab, var(--accent) 18%, transparent);
+  --accent-fg:    #f0f7f5;
+  --shadow-card:  0 0 0 0 transparent;
+  --grid-line:    rgba(255,255,255,.04);
+}
+
+:root[data-theme="light"] {
+  --bg:           #fafaf9;
+  --bg-elev:      #ffffff;
+  --bg-card:      #ffffff;
+  --bg-card-hov:  #f5f5f4;
+  --bg-frame:     #f3f3f1;
+  --border:       #e7e5e3;
+  --border-soft:  #ececea;
+  --border-strong:#d6d3d1;
+  --border-hov:   #a8a29e;
+  --text:         #18181b;
+  --text-mid:     #3f3f46;
+  --text-muted:   #57534e;
+  --text-dim:     #a3a3a3;
+  --accent-soft:  color-mix(in oklab, var(--accent) 12%, transparent);
+  --accent-fg:    #ffffff;
+  --shadow-card:  0 1px 2px rgba(0,0,0,.03);
+  --grid-line:    rgba(0,0,0,.05);
+}
+
+:root[data-density="compact"] { --pad-section: 64px; --pad-card: 16px; --gap: 14px; --hero-pad: 80px; }
+:root[data-density="regular"] { --pad-section: 96px; --pad-card: 22px; --gap: 18px; --hero-pad: 120px; }
+:root[data-density="comfy"]   { --pad-section: 128px; --pad-card: 28px; --gap: 22px; --hero-pad: 160px; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+  line-height: 1.55;
+  font-size: 15px;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.muted { color: var(--text-muted); }
+.accent { color: var(--accent); }
+.small { font-size: 12px; }
+.mono { font-family: var(--mono); font-feature-settings: "tnum"; letter-spacing: -0.005em; }
+.dotsep { padding: 0 8px; color: var(--text-dim); }
+
+/* ─── Layout ─── */
+.root { min-height: 100vh; }
+.main { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+.section { padding: var(--pad-section) 0; border-top: 1px solid var(--border); }
+.section:first-child { border-top: none; }
+
+/* ─── Nav ─── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 32px;
+  max-width: 1180px; margin: 0 auto;
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  transition: border-color .25s, background .25s;
+  border-bottom: 1px solid transparent;
+}
+.nav.is-scrolled { border-bottom-color: var(--border); }
+.nav-brand { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.nav-mark {
+  width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em;
+  background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: 6px;
+  color: var(--text);
+}
+.nav-brand-name { font-weight: 600; letter-spacing: -0.01em; }
+.nav-brand-divider { display: inline-block; width: 1px; height: 14px; background: var(--border-strong); margin: 0 4px; }
+.nav-brand-role { font-size: 12px; }
+.nav-links { display: flex; gap: 4px; }
+.nav-links a {
+  font-size: 13px; color: var(--text-muted);
+  padding: 6px 12px; border-radius: 6px;
+  transition: color .15s, background .15s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a.is-active { color: var(--text); background: var(--bg-card); }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; padding: 7px 12px; border-radius: 7px;
+  background: var(--text); color: var(--bg); font-weight: 500;
+}
+.nav-cta:hover { opacity: .92; }
+
+@media (max-width: 880px) {
+  .nav-brand-divider, .nav-brand-role, .nav-links { display: none; }
+}
+
+/* ─── Buttons ─── */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 13px; font-weight: 500;
+  border: 1px solid transparent;
+  transition: background .15s, color .15s, border-color .15s, transform .1s;
+}
+.btn-primary { background: var(--text); color: var(--bg); }
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border-strong); }
+.btn-ghost:hover { background: var(--bg-card); border-color: var(--border-hov); }
+
+/* ─── Chips ─── */
+.chip {
+  display: inline-flex; align-items: center;
+  font-family: var(--mono); font-size: 11px;
+  padding: 3px 8px; border-radius: 4px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-mid); letter-spacing: -0.005em;
+}
+.chip-mono {
+  font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+  padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-strong);
+}
+
+/* ─── Section headers ─── */
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 36px;
+}
+.section-header-l { display: flex; align-items: center; gap: 14px; }
+.section-num { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.04em; }
+.section-line { display: inline-block; width: 28px; height: 1px; background: var(--border-strong); }
+.section-label { font-size: 14px; font-weight: 500; color: var(--text); margin: 0; letter-spacing: -0.005em; }
+.section-aside { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+
+/* ─── Hero ─── */
+.hero {
+  display: grid; grid-template-columns: 1fr 360px;
+  gap: 64px; padding: var(--hero-pad) 0 var(--pad-section);
+  align-items: end;
+}
+@media (max-width: 880px) { .hero { grid-template-columns: 1fr; gap: 40px; } }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+  padding: 5px 10px; border: 1px solid var(--border-strong);
+  border-radius: 100px; margin-bottom: 28px;
+}
+.hero-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px var(--accent-soft); }
+  50%       { box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 8%, transparent); }
+}
+.hero-name {
+  font-family: var(--display);
+  font-size: clamp(48px, 7vw, 84px);
+  line-height: .98; margin: 0 0 14px;
+  letter-spacing: -0.035em; font-weight: 500;
+}
+.hero-comma { color: var(--accent); }
+.hero-headline {
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.35; letter-spacing: -0.012em;
+  color: var(--text); margin: 0 0 16px;
+  max-width: 32ch; text-wrap: pretty; font-weight: 400;
+}
+.hero-sub { font-size: 15px; color: var(--text-muted); max-width: 50ch; margin: 0 0 32px; line-height: 1.6; }
+.hero-cta-row { display: flex; gap: 10px; align-items: center; margin-bottom: 32px; flex-wrap: wrap; }
+.hero-meta {
+  font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+  display: flex; align-items: center; flex-wrap: wrap;
+}
+
+/* Hero ticker */
+.hero-ticker {
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 18px; background: var(--bg-card);
+}
+.ticker-label {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+  margin-bottom: 16px; letter-spacing: 0.02em;
+}
+.ticker-tag {
+  font-size: 9px; padding: 2px 6px;
+  background: var(--accent); color: var(--accent-fg);
+  border-radius: 3px; letter-spacing: 0.08em; font-weight: 600;
+}
+.ticker-rows { display: flex; flex-direction: column; gap: 12px; }
+.ticker-row {
+  padding: 8px 0; border-top: 1px solid var(--border-soft);
+  transition: opacity .25s; opacity: .55; cursor: default;
+}
+.ticker-row.is-active { opacity: 1; }
+.ticker-row:first-child { border-top: none; }
+.ticker-value { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+.ticker-num { font-family: var(--mono); font-size: 22px; letter-spacing: -0.015em; color: var(--text); }
+.ticker-row.is-active .ticker-num { color: var(--accent); }
+.ticker-unit { font-family: var(--mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.ticker-label-sm { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+.ticker-bar { height: 2px; background: var(--border-soft); margin-top: 8px; border-radius: 1px; overflow: hidden; }
+.ticker-bar span { display: block; height: 100%; width: 0%; background: var(--accent); transition: width .25s; }
+.ticker-row.is-active .ticker-bar span { width: 100%; transition: width 2.7s linear; }
+
+/* ─── About ─── */
+.about-grid { display: grid; grid-template-columns: 220px 1fr; gap: 48px; }
+@media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; gap: 24px; } }
+.about-card {
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px; background: var(--bg-card);
+  display: flex; flex-direction: column; gap: 14px;
+}
+.about-card-kv { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
+.about-card-kv > span:first-child {
+  font-family: var(--mono); font-size: 10px; color: var(--text-dim);
+  letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 2px;
+}
+.about-card-kv b { font-weight: 500; color: var(--text); }
+.about-card-kv .muted { font-size: 12px; }
+.about-prose p { font-size: 16px; line-height: 1.7; color: var(--text-mid); margin: 0 0 18px; text-wrap: pretty; max-width: 64ch; }
+.about-prose p:last-child { margin-bottom: 0; }
+.about-prose p:first-child { color: var(--text); }
+
+/* ─── Experience ─── */
+.exp-list { display: flex; flex-direction: column; }
+.exp-card {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: auto auto;
+  gap: 0 8px;
+}
+.exp-card .exp-rail { grid-column: 1; grid-row: 1 / span 2; }
+.exp-card .exp-head { grid-column: 2; grid-row: 1; }
+.exp-card .exp-body { grid-column: 2; grid-row: 2; }
+.exp-rail { display: flex; flex-direction: column; align-items: center; padding-top: 22px; }
+.exp-node { width: 9px; height: 9px; border-radius: 50%; background: var(--bg-card); border: 1px solid var(--border-strong); flex-shrink: 0; }
+.exp-node.is-now { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.exp-line { flex: 1; width: 1px; background: var(--border-strong); margin-top: 4px; }
+.exp-line.is-last { background: transparent; }
+.exp-head {
+  background: none; border: none; padding: 18px 0;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  width: 100%; text-align: left;
+  border-bottom: 1px solid var(--border-soft);
+  transition: padding .2s;
+}
+.exp-card.is-open .exp-head { border-bottom-color: var(--border); }
+.exp-head:hover .exp-company { color: var(--accent); }
+.exp-period { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.02em; margin-bottom: 6px; }
+.exp-company { font-size: 17px; font-weight: 500; color: var(--text); letter-spacing: -0.012em; transition: color .15s; margin-bottom: 2px; }
+.exp-role { font-size: 13px; color: var(--text-muted); }
+.exp-head-r { color: var(--text-muted); padding-top: 4px; }
+.exp-body { padding: 4px 0 28px; }
+.exp-scope { font-size: 14px; color: var(--text-mid); margin: 4px 0 18px; max-width: 70ch; line-height: 1.6; }
+.exp-outcomes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.exp-outcomes li { display: grid; grid-template-columns: 32px 1fr; gap: 10px; font-size: 14px; color: var(--text-mid); line-height: 1.6; max-width: 72ch; }
+.exp-num { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.04em; padding-top: 4px; }
+.exp-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+
+/* ─── Projects ─── */
+.proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 760px) { .proj-grid { grid-template-columns: 1fr; } }
+.proj-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: var(--pad-card);
+  text-align: left; cursor: pointer;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: background .15s, border-color .15s, transform .15s;
+  font-family: inherit; color: inherit;
+  box-shadow: var(--shadow-card);
+}
+.proj-card:hover { background: var(--bg-card-hov); border-color: var(--border-hov); }
+.proj-card-top { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 11px; }
+.proj-kicker { color: var(--text-muted); }
+.proj-tag {
+  font-family: var(--mono); font-size: 10px; color: var(--accent);
+  padding: 2px 7px; border-radius: 4px; background: var(--accent-soft); letter-spacing: 0.02em;
+}
+.proj-visual {
+  border: 1px solid var(--border-soft); border-radius: 8px;
+  background: var(--bg-frame); height: 140px;
+  display: flex; align-items: stretch; overflow: hidden;
+}
+.viz { width: 100%; height: 100%; }
+.proj-title { font-size: 19px; font-weight: 500; margin: 0; letter-spacing: -0.014em; color: var(--text); }
+.proj-summary { font-size: 14px; color: var(--text-muted); margin: 6px 0 0; line-height: 1.55; }
+.proj-card-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+  padding-top: 8px; border-top: 1px solid var(--border-soft); margin-top: auto;
+}
+.proj-card:hover .proj-card-foot { color: var(--accent); }
+
+/* ─── Modal ─── */
+.modal-scrim {
+  position: fixed; inset: 0; z-index: 200;
+  background: color-mix(in oklab, var(--bg) 85%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  padding: 5vh 16px; overflow-y: auto;
+  display: flex; align-items: flex-start; justify-content: center;
+  animation: fade .18s ease-out;
+}
+@keyframes fade { from { opacity: 0; } }
+.modal-sheet {
+  width: 100%; max-width: 720px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 28px;
+  animation: slideUp .2s ease-out;
+  box-shadow: 0 24px 60px rgba(0,0,0,.4);
+}
+@keyframes slideUp { from { transform: translateY(8px); opacity: 0; } }
+.modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.modal-kicker { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; }
+.modal-close {
+  background: none; border: 1px solid var(--border-strong);
+  width: 28px; height: 28px; border-radius: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+}
+.modal-close:hover { color: var(--text); border-color: var(--border-hov); }
+.modal-title { font-size: 28px; margin: 0 0 8px; letter-spacing: -0.022em; font-weight: 500; }
+.modal-summary { font-size: 15px; color: var(--text-mid); margin: 0 0 22px; line-height: 1.6; max-width: 60ch; }
+.modal-visual { height: 180px; border: 1px solid var(--border-soft); border-radius: 8px; background: var(--bg-frame); margin-bottom: 24px; overflow: hidden; }
+.modal-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 24px; }
+.modal-field { display: grid; grid-template-columns: 100px 1fr; gap: 16px; padding-top: 16px; border-top: 1px solid var(--border-soft); }
+.modal-field-label { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.04em; text-transform: uppercase; padding-top: 2px; }
+.modal-field-value { font-size: 14px; color: var(--text-mid); line-height: 1.65; }
+.modal-stack { padding-top: 16px; border-top: 1px solid var(--border-soft); }
+.modal-stack-label { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px; }
+.modal-stack-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ─── Pintas ─── */
+.pintas-frame { border: 1px solid var(--border); border-radius: 14px; background: var(--bg-frame); overflow: hidden; }
+.pintas-frame-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; border-bottom: 1px solid var(--border-soft); background: var(--bg-card);
+}
+.pintas-mark {
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  letter-spacing: 0.12em; font-weight: 600;
+  padding: 3px 8px; border: 1px solid var(--accent-soft); border-radius: 4px; margin-right: 12px;
+}
+.pintas-frame-head-l { display: flex; align-items: center; gap: 0; font-size: 13px; }
+
+/* Variant 1: pipeline */
+.pntp { padding: 36px 28px 22px; }
+.pntp-legs { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 0; align-items: center; }
+.pntp-legs > * { min-width: 0; }
+.pntp-leg { text-align: center; padding: 18px 14px; border-radius: 10px; transition: background .2s; cursor: default; position: relative; }
+.pntp-leg.is-hover { background: var(--bg-card); }
+.pntp-leg-idx { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.06em; margin-bottom: 6px; }
+.pntp-leg-label { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.pntp-leg-detail { font-size: 12px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.5; min-height: 36px; }
+.pntp-node { position: relative; width: 32px; height: 32px; margin: 0 auto; }
+.pntp-node-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--border-strong); transition: border-color .2s, box-shadow .2s; }
+.pntp-leg.is-hover .pntp-node-ring { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.pntp-node-dot { position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; transform: translate(-50%, -50%); }
+.pntp-link { display: flex; align-items: center; padding: 0 6px; align-self: center; }
+.pntp-link-svg { width: 100%; height: 24px; }
+.pntp-foot { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; border-top: 1px solid var(--border-soft); margin: 18px 0 0; padding: 18px 4px 6px; }
+.pntp-foot-cell .muted { font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+.pntp-foot-val { font-family: var(--mono); font-size: 16px; color: var(--text); letter-spacing: -0.01em; }
+@media (max-width: 760px) { .pntp-legs { grid-template-columns: 1fr; } .pntp-link { display: none; } .pntp-foot { grid-template-columns: 1fr 1fr; } }
+
+/* Variant 2: compare */
+.pntc { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; padding: 30px 28px; align-items: stretch; }
+.pntc-col { border: 1px solid var(--border-soft); border-radius: 10px; padding: 22px; background: var(--bg-card); }
+.pntc-col-new { border-color: var(--accent-soft); }
+.pntc-col-head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.pntc-tag { font-family: var(--mono); font-size: 10px; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.06em; }
+.pntc-tag-old { background: var(--bg-frame); color: var(--text-dim); }
+.pntc-tag-new { background: var(--accent-soft); color: var(--accent); }
+.pntc-col-name { font-size: 14px; font-weight: 500; color: var(--text); }
+.pntc-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-dim); font-family: var(--mono); position: relative; }
+.pntc-arrow-line { width: 1px; flex: 1; background: linear-gradient(to bottom, transparent, var(--accent), transparent); position: absolute; top: 20%; bottom: 20%; }
+.pntc-arrow-tip { font-size: 18px; color: var(--accent); background: var(--bg-frame); padding: 6px; z-index: 1; }
+.cmpr { display: grid; grid-template-columns: 110px 1fr 90px; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--border-soft); }
+.cmpr:last-of-type { border-bottom: none; }
+.cmpr-l { font-size: 12px; color: var(--text-muted); }
+.cmpr-bar { height: 6px; background: var(--bg-frame); border-radius: 3px; overflow: hidden; border: 1px solid var(--border-soft); }
+.cmpr-fill { display: block; height: 100%; transition: width .6s ease-out; }
+.cmpr-fill.cmpr-dim    { background: var(--text-dim); }
+.cmpr-fill.cmpr-accent { background: var(--accent); }
+.cmpr-v { font-family: var(--mono); font-size: 12px; text-align: right; color: var(--text-mid); }
+.cmpr-v.cmpr-accent { color: var(--accent); }
+.pntc-foot { font-size: 11px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-soft); line-height: 1.5; }
+@media (max-width: 760px) { .pntc { grid-template-columns: 1fr; gap: 16px; padding: 22px; } .pntc-arrow { display: none; } }
+
+/* Variant 3: ticker */
+.pntt { padding: 0; }
+.pntt-top { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border-soft); }
+.pntt-top-cell { padding: 16px 18px; border-right: 1px solid var(--border-soft); font-size: 13px; }
+.pntt-top-cell:last-child { border-right: none; }
+.pntt-top-cell .muted { font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+.pntt-stages { display: flex; flex-direction: column; padding: 24px 28px; gap: 4px; }
+.pntt-stage { display: grid; grid-template-columns: 24px 1fr 70px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--border-soft); opacity: .5; transition: opacity .25s; }
+.pntt-stage:last-child { border-bottom: none; }
+.pntt-stage.is-done { opacity: 1; }
+.pntt-stage-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bg-card); border: 1px solid var(--border-strong); margin-left: 4px; }
+.pntt-stage.is-done .pntt-stage-dot { background: var(--accent); border-color: var(--accent); }
+.pntt-stage.is-now .pntt-stage-dot { box-shadow: 0 0 0 4px var(--accent-soft); animation: pulse 1.4s ease-in-out infinite; }
+.pntt-stage-name { font-size: 14px; color: var(--text); }
+.pntt-stage-time { font-size: 12px; color: var(--text-muted); text-align: right; }
+.pntt-bottom { display: grid; grid-template-columns: repeat(3, 1fr); padding: 22px 28px; border-top: 1px solid var(--border-soft); background: var(--bg-card); gap: 20px; }
+.pntt-bottom-cell .muted { font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px; }
+.pntt-big { font-size: 26px; letter-spacing: -0.018em; color: var(--text); }
+@media (max-width: 760px) { .pntt-top { grid-template-columns: 1fr 1fr; } .pntt-bottom { grid-template-columns: 1fr; gap: 14px; } }
+
+/* ─── Capabilities ─── */
+.caps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 760px) { .caps-grid { grid-template-columns: 1fr; } }
+.caps-col { border: 1px solid var(--border); border-radius: 12px; padding: 20px; background: var(--bg-card); }
+.caps-col-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border-soft); }
+.caps-col-num { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.04em; }
+.caps-col-label { font-size: 13px; font-weight: 500; color: var(--text); letter-spacing: -0.005em; }
+.caps-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.caps-list li { display: grid; grid-template-columns: 14px 1fr; gap: 8px; font-size: 13px; color: var(--text-mid); }
+.caps-tick { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+
+/* ─── Contact ─── */
+.contact-grid { display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: start; }
+@media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; gap: 32px; } }
+.contact-headline { font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.018em; font-weight: 500; margin: 0 0 10px; line-height: 1.25; text-wrap: pretty; max-width: 22ch; }
+.contact-prose .muted { font-size: 14px; margin: 0 0 24px; }
+.contact-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.contact-form { border: 1px solid var(--border); border-radius: 12px; padding: 18px; background: var(--bg-card); display: flex; flex-direction: column; gap: 14px; }
+.contact-form-row { display: flex; flex-direction: column; gap: 6px; }
+.contact-form-row label { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.04em; text-transform: uppercase; }
+.contact-form-row input,
+.contact-form-row textarea { background: var(--bg-frame); border: 1px solid var(--border-soft); border-radius: 7px; padding: 9px 12px; font-family: inherit; font-size: 13px; color: var(--text); resize: vertical; }
+.contact-form-row input:focus,
+.contact-form-row textarea:focus { outline: none; border-color: var(--accent); background: var(--bg-card-hov); }
+.contact-send { align-self: flex-start; }
+
+.site-foot { margin-top: var(--pad-section); padding-top: 24px; border-top: 1px solid var(--border-soft); display: flex; align-items: center; justify-content: space-between; font-size: 11px; }
+
+/* ─── Misc ─── */
+::selection { background: var(--accent); color: var(--accent-fg); }
+.root { animation: rootIn .35s ease-out; }
+@keyframes rootIn { from { opacity: 0; transform: translateY(4px); } }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- Content config -->
+  <script>
+window.PORTFOLIO_CONTENT = {
+  person: {
+    name: "David Immanuel",
+    location: "Jakarta, Indonesia",
+    initials: "DI",
+    headline: "Operator and builder. RevOps, product, and fintech across nine-figure books.",
+    sub: "Demand Planner & Business Specialist at Asia Pulp & Paper's Specialty Paper BU. Building Pintas — a stablecoin settlement rail for Indonesian exporters.",
+    email: "david.immanuel@example.com",
+    linkedin: "https://www.linkedin.com/in/david-im-manuel/",
+    github: "https://github.com/",
+    resumeUrl: "#",
+  },
+
+  metrics: [
+    { value: "9-figure", unit: "USD",       label: "export book under plan" },
+    { value: "10",       unit: "regions",   label: "global market coverage" },
+    { value: "98%",      unit: "reduction", label: "switching-cost framework, PermataBank" },
+    { value: "1",        unit: "rail",      label: "founder-track: Pintas settlement" },
+  ],
+
+  about: [
+    "I run demand planning for a nine-figure USD export book across ten regions at Asia Pulp & Paper's Specialty Paper business unit, reporting to the Sales Director. Day to day I sit between commercial, supply, and finance — translating market signal into commitments the mill can ship against.",
+    "Before APP I was at PermataBank inside the Digital Business division, where I designed a switching-cost elimination framework for mobile banking that drove a 98% cost reduction and double-digit billion IDR in OPEX savings. Earlier I implemented enterprise software at IBM Indonesia. CS undergrad at Bina Nusantara, MBA at Prasetiya Mulya (Top 5, GPA 3.74) — the dual training is the edge I keep leaning on.",
+    "On the side I'm building Pintas: a B2B cross-border settlement rail using stablecoin infrastructure to replace the SWIFT leg between USD endpoints for Indonesian exporters. Born in Semarang, based in Jakarta.",
+  ],
+
+  experience: [
+    {
+      id: "app",
+      company: "Asia Pulp & Paper (Sinarmas Group)",
+      role: "Demand Planner & Business Specialist — Specialty Paper BU",
+      period: "Present",
+      location: "Jakarta",
+      scope: "Nine-figure USD export book across 10 global regions. Reports to Sales Director.",
+      outcomes: [
+        "Designed and shipped a React + Recharts Global Market Intelligence Dashboard tracking Order Confirmed vs Target vs Market Size across 10 regions — replaced a multi-tab spreadsheet workflow the commercial team had used for years.",
+        "Built an SAP-integrated Weekly Sales Projection Tracker (BPC vs OT vs Actuals) so the BU could see variance the same day, not at month-close.",
+        "Stood up a Croston/SBA intermittent-demand forecasting workbook with FVA analysis for products where conventional methods produce noise.",
+      ],
+      stack: ["React", "Recharts", "SAP BPC", "Python", "Croston / SBA", "FVA"],
+    },
+    {
+      id: "permata",
+      company: "PermataBank",
+      role: "Digital Business Division",
+      period: "Prior",
+      location: "Jakarta",
+      scope: "Analytics and product economics for the mobile banking franchise.",
+      outcomes: [
+        "Authored a mobile banking switching-cost elimination framework that drove a 98% reduction in switching cost.",
+        "Translated the framework into a roadmap that captured double-digit billion IDR in OPEX savings.",
+        "Built the analytical case the leadership team carried into prioritization.",
+      ],
+      stack: ["SQL", "Python", "Product economics", "Strategy"],
+    },
+    {
+      id: "ibm",
+      company: "IBM Indonesia",
+      role: "Software Implementation",
+      period: "Earlier",
+      location: "Jakarta",
+      scope: "Enterprise software delivery for Indonesian institutions.",
+      outcomes: [
+        "Implemented enterprise software for institutional clients end-to-end — requirements through cutover.",
+        "First exposure to the operational anatomy of large Indonesian businesses, which still shapes how I scope today.",
+      ],
+      stack: ["Enterprise SW", "Implementation", "Client delivery"],
+    },
+  ],
+
+  projects: [
+    {
+      id: "pintas",
+      title: "Pintas",
+      kicker: "Founder — settlement infrastructure",
+      summary: "B2B cross-border settlement rail using stablecoin infrastructure (USDC/USDT) as the invisible leg between USD endpoints. Replaces the SWIFT layer, not the bank.",
+      problem: "Indonesian exporters routinely wait 3–5 days for USD wires to settle. The delay is a working-capital tax, and the cost is opaque — buried in correspondent-bank fees and FX spread. The receiver doesn't want to think about crypto; they want USD in their account, faster and cheaper.",
+      approach: "USD on-ramp → stablecoin settlement → USD off-ramp. Primary infrastructure partner: TransFi for the Indonesia–Singapore corridor. Zero Hash layered for US regulatory coverage. Distribution anchor through family JV connection to Indonesia Morowali Industrial Park (Tsingshan Group). Pitched Antler, Iterative, YC.",
+      outcome: "Pre-revenue. In-corridor pilots scoped with two large exporters. Architecture and partner stack locked.",
+      stack: ["USDC / USDT", "TransFi", "Zero Hash", "Indonesia–Singapore corridor", "B2B onboarding"],
+      accentLabel: "Founder",
+    },
+    {
+      id: "dashboard",
+      title: "APP Market Intelligence Dashboard",
+      kicker: "0→1 production tool — Specialty Paper BU",
+      summary: "React + Recharts dashboard tracking Order Confirmed vs Target vs Market Size across 10 global regions, replacing a spreadsheet workflow the commercial team had used for years.",
+      problem: "Commercial reviews were running on stitched-together spreadsheets. Variance between target, confirmed orders, and external market signal was hard to see in one view, and impossible to drill into during a meeting.",
+      approach: "Designed a regional-grid view with three-series comparison per region, drill-down on click, and a delta column tied to commercial owners. Built in React with Recharts on a normalized data layer fed from the existing SAP pipeline.",
+      outcome: "Adopted into the BU's weekly commercial review. Variance is now visible during the meeting rather than reconstructed afterward.",
+      stack: ["React", "Recharts", "Tailwind", "SAP data layer", "10 regions"],
+      accentLabel: "Built",
+    },
+    {
+      id: "permata",
+      title: "Switching-Cost Elimination Framework",
+      kicker: "Analytical credential — PermataBank",
+      summary: "Framework that quantified, then eliminated, switching cost for the mobile banking franchise. 98% reduction in switching cost, double-digit billion IDR in OPEX savings.",
+      problem: "Customers churned at the point of friction, not at the point of dissatisfaction. The org could see the churn but not the friction, and traditional NPS work hadn't moved the number.",
+      approach: "Decomposed the switching event into a sequence of costs — informational, procedural, financial — and built a unit-economic model that priced each one. Used the model to identify the smallest set of interventions with the largest delta.",
+      outcome: "98% reduction in measured switching cost. Double-digit billion IDR in OPEX savings unlocked through the roadmap derived from the framework.",
+      stack: ["Switching-cost theory", "Unit economics", "SQL", "Product strategy"],
+      accentLabel: "Strategy",
+    },
+    {
+      id: "kos",
+      title: "Boarding House Management System",
+      kicker: "AI-native proof — family kos",
+      summary: "Internal tool for the family boarding house: Google Sheets backend, WhatsApp integration, and a Claude-powered conversational agent that manages rooms and payments in natural language.",
+      problem: "Running a small kos is paperwork plus WhatsApp. Tenants ask the same questions on a loop; rent tracking lives in a notebook; the operator has no time to build a real system.",
+      approach: "Sheets as the system of record (zero hosting cost, anyone can edit), WhatsApp as the surface, Anthropic API in the middle. The agent reads bookings, payments, and tenant messages from Sheets, replies in natural Bahasa, and writes structured rows back. Built with Claude Code.",
+      outcome: "In daily use. The agent handles room queries, payment reminders, and tenant onboarding without operator intervention.",
+      stack: ["Claude (Anthropic API)", "Claude Code", "Google Sheets", "WhatsApp Business API", "Apps Script"],
+      accentLabel: "AI-native",
+    },
+  ],
+
+  capabilities: {
+    strategy: {
+      label: "Strategy & Analysis",
+      items: [
+        "Switching-cost frameworks",
+        "Unit economics",
+        "Market sizing & segmentation",
+        "Croston / SBA forecasting",
+        "FVA (Forecast Value Add)",
+        "Commercial review design",
+        "Pricing & margin analysis",
+      ],
+    },
+    build: {
+      label: "Build & Tooling",
+      items: [
+        "React + Recharts",
+        "Python (pandas, statsmodels)",
+        "SQL",
+        "SAP BPC integration",
+        "Google Sheets / Apps Script",
+        "Anthropic API",
+        "Claude Code (production use)",
+      ],
+    },
+    operating: {
+      label: "Operating",
+      items: [
+        "Demand planning at 9-figure scale",
+        "10-region S&OP cadence",
+        "Cross-functional with sales / supply / finance",
+        "Founder-track fundraising (Antler, Iterative, YC)",
+        "Stablecoin settlement architecture",
+        "B2B partner onboarding",
+      ],
+    },
+  },
+
+  pintas: {
+    swift:      { days: "3–5", fee: "~$45", lift: "1.2–2.5%" },
+    pintasRail: { hours: "minutes", fee: "~$8", lift: "0.4–0.7%" },
+    legs: [
+      { id: "ramp",   label: "USD on-ramp",    detail: "Local USD account, KYB-cleared exporter" },
+      { id: "stable", label: "Stablecoin leg",  detail: "USDC / USDT — Indonesia → Singapore corridor" },
+      { id: "off",    label: "USD off-ramp",    detail: "Counterparty bank, USD received" },
+    ],
+  },
+};
+  </script>
+
+  <!-- Tweaks panel -->
+  <script type="text/babel">
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center}
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;overflow-wrap:anywhere}
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
+    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
+    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
+    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);
+    box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
+    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i:first-child{box-shadow:none}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+      ? keyOrEdits : { [keyOrEdits]: val };
+    setValues((prev) => ({ ...prev, ...edits }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+    window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
+  }, []);
+  return [values, setTweak];
+}
+
+function TweaksPanel({ title = 'Tweaks', children }) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth, h = panel.offsetHeight;
+    const maxRight  = Math.max(PAD, window.innerWidth  - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight,  Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+    };
+    panel.style.right  = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    const ro = new ResizeObserver(clampToViewport);
+    ro.observe(document.documentElement);
+    return () => ro.disconnect();
+  }, [open, clampToViewport]);
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      const t = e?.data?.type;
+      if (t === '__activate_edit_mode')   setOpen(true);
+      else if (t === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const dismiss = () => {
+    setOpen(false);
+    window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+  };
+
+  const onDragStart = (e) => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX, sy = e.clientY;
+    const startRight  = window.innerWidth  - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = (ev) => {
+      offsetRef.current = { x: startRight - (ev.clientX - sx), y: startBottom - (ev.clientY - sy) };
+      clampToViewport();
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+    };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+
+  if (!open) return null;
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel"
+           style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" aria-label="Close" onMouseDown={(e) => e.stopPropagation()} onClick={dismiss}>✕</button>
+        </div>
+        <div className="twk-body">{children}</div>
+      </div>
+    </>
+  );
+}
+
+function TweakSection({ label }) {
+  return <div className="twk-sect">{label}</div>;
+}
+
+function TweakRow({ label, value, children, inline = false }) {
+  return (
+    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+      <div className="twk-lbl">
+        <span>{label}</span>
+        {value != null && <span className="twk-val">{value}</span>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+              role="switch" aria-checked={!!value}
+              onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+
+  const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
+  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+  const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
+
+  if (!fitsAsSegments) {
+    return (
+      <TweakRow label={label}>
+        <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
+          {options.map((o) => {
+            const v = typeof o === 'object' ? o.value : o;
+            const l = typeof o === 'object' ? o.label : o;
+            return <option key={v} value={v}>{l}</option>;
+          })}
+        </select>
+      </TweakRow>
+    );
+  }
+
+  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+  const n = opts.length;
+
+  const segAt = (clientX) => {
+    const r = trackRef.current.getBoundingClientRect();
+    const inner = r.width - 4;
+    const i = Math.floor(((clientX - r.left - 2) / inner) * n);
+    return opts[Math.max(0, Math.min(n - 1, i))].value;
+  };
+
+  const onPointerDown = (e) => {
+    setDragging(true);
+    const v0 = segAt(e.clientX);
+    if (v0 !== valueRef.current) onChange(v0);
+    const move = (ev) => { if (trackRef.current) { const v = segAt(ev.clientX); if (v !== valueRef.current) onChange(v); } };
+    const up = () => { setDragging(false); window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+
+  return (
+    <TweakRow label={label}>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown}
+           className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+        <div className="twk-seg-thumb"
+             style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`, width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map((o) => (
+          <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>{o.label}</button>
+        ))}
+      </div>
+    </TweakRow>
+  );
+}
+
+function __twkIsLight(hex) {
+  const h = String(hex).replace('#', '');
+  const x = h.length === 3 ? h.replace(/./g, (c) => c + c) : h.padEnd(6, '0');
+  const n = parseInt(x.slice(0, 6), 16);
+  if (Number.isNaN(n)) return true;
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return r * 299 + g * 587 + b * 114 > 148000;
+}
+
+function TweakColor({ label, value, options, onChange }) {
+  if (!options || !options.length) {
+    return (
+      <div className="twk-row twk-row-h">
+        <div className="twk-lbl"><span>{label}</span></div>
+        <input type="color" value={value} onChange={(e) => onChange(e.target.value)} />
+      </div>
+    );
+  }
+  const key = (o) => String(JSON.stringify(o)).toLowerCase();
+  const cur = key(value);
+  return (
+    <TweakRow label={label}>
+      <div className="twk-chips" role="radiogroup">
+        {options.map((o, i) => {
+          const colors = Array.isArray(o) ? o : [o];
+          const [hero, ...rest] = colors;
+          const sup = rest.slice(0, 4);
+          const on = key(o) === cur;
+          return (
+            <button key={i} type="button" className="twk-chip" role="radio"
+                    aria-checked={on} data-on={on ? '1' : '0'}
+                    style={{ background: hero }}
+                    onClick={() => onChange(o)}>
+              {sup.length > 0 && <span>{sup.map((c, j) => <i key={j} style={{ background: c }} />)}</span>}
+              {on && (
+                <svg viewBox="0 0 14 14" aria-hidden="true" style={{ position:'absolute', top:6, left:6, width:13, height:13 }}>
+                  <path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2"
+                        strokeLinecap="round" strokeLinejoin="round"
+                        stroke={__twkIsLight(hero) ? 'rgba(0,0,0,.78)' : '#fff'} />
+                </svg>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </TweakRow>
+  );
+}
+
+Object.assign(window, { useTweaks, TweaksPanel, TweakSection, TweakRow, TweakToggle, TweakRadio, TweakColor });
+  </script>
+
+  <!-- Shared icons + SectionHeader (used across components) -->
+  <script type="text/babel">
+function ArrowIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+      <path d="M3 10L10 3M10 3H4.5M10 3V8.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ChevronIcon({ open }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"
+         style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform .25s" }}>
+      <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function SectionHeader({ number, label, action }) {
+  return (
+    <div className="section-header">
+      <div className="section-header-l">
+        <span className="section-num">{number}</span>
+        <span className="section-line" />
+        <h2 className="section-label">{label}</h2>
+      </div>
+      {action ? <div className="section-header-r">{action}</div> : null}
+    </div>
+  );
+}
+
+Object.assign(window, { ArrowIcon, ChevronIcon, SectionHeader });
+  </script>
+
+  <!-- Nav -->
+  <script type="text/babel">
+function Nav({ person }) {
+  const [active, setActive] = React.useState("top");
+  const [scrolled, setScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const ids = ["top", "about", "experience", "projects", "pintas", "capabilities", "contact"];
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      let cur = "top";
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= 120) cur = id;
+      }
+      setActive(cur);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const links = [
+    ["about", "About"], ["experience", "Experience"], ["projects", "Work"],
+    ["pintas", "Pintas"], ["capabilities", "Capabilities"], ["contact", "Contact"],
+  ];
+
+  return (
+    <nav className={`nav ${scrolled ? "is-scrolled" : ""}`}>
+      <a className="nav-brand" href="#top">
+        <span className="nav-mark">{person.initials}</span>
+        <span className="nav-brand-name">{person.name}</span>
+        <span className="nav-brand-divider" />
+        <span className="nav-brand-role muted">Operator · Jakarta</span>
+      </a>
+      <div className="nav-links">
+        {links.map(([id, label]) => (
+          <a key={id} href={`#${id}`} className={active === id ? "is-active" : ""}>{label}</a>
+        ))}
+      </div>
+      <a className="nav-cta" href={`mailto:${person.email}`}>
+        Get in touch <ArrowIcon />
+      </a>
+    </nav>
+  );
+}
+Object.assign(window, { Nav });
+  </script>
+
+  <!-- Hero -->
+  <script type="text/babel">
+function Hero({ person, metrics }) {
+  const [tick, setTick] = React.useState(0);
+  React.useEffect(() => {
+    const id = setInterval(() => setTick((t) => (t + 1) % metrics.length), 2800);
+    return () => clearInterval(id);
+  }, [metrics.length]);
+
+  return (
+    <section className="hero" id="top">
+      <div className="hero-grid">
+        <div className="hero-eyebrow">
+          <span className="hero-dot" />
+          <span>Available for senior operator / founding roles · Q3 26</span>
+        </div>
+        <h1 className="hero-name">{person.name}<span className="hero-comma">,</span></h1>
+        <p className="hero-headline">{person.headline}</p>
+        <p className="hero-sub">{person.sub}</p>
+        <div className="hero-cta-row">
+          <a className="btn btn-primary" href={person.resumeUrl}>Resume <ArrowIcon /></a>
+          <a className="btn btn-ghost" href={`mailto:${person.email}`}>Get in touch</a>
+          <a className="btn btn-ghost" href={person.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+        <div className="hero-meta">
+          <span>{person.location}</span>
+          <span className="dotsep">·</span>
+          <span>MBA, Prasetiya Mulya · CS, Bina Nusantara</span>
+        </div>
+      </div>
+
+      <div className="hero-ticker">
+        <div className="ticker-label">
+          <span className="ticker-tag">LIVE</span>
+          <span>Operator metrics</span>
+        </div>
+        <div className="ticker-rows">
+          {metrics.map((m, i) => (
+            <div key={i} className={`ticker-row ${i === tick ? "is-active" : ""}`}
+                 onMouseEnter={() => setTick(i)}>
+              <div className="ticker-value">
+                <span className="ticker-num">{m.value}</span>
+                <span className="ticker-unit">{m.unit}</span>
+              </div>
+              <div className="ticker-label-sm">{m.label}</div>
+              <div className="ticker-bar"><span /></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+Object.assign(window, { Hero });
+  </script>
+
+  <!-- About -->
+  <script type="text/babel">
+function About({ paragraphs }) {
+  return (
+    <section className="section" id="about">
+      <SectionHeader number="01" label="About" />
+      <div className="about-grid">
+        <div>
+          <div className="about-card">
+            <div className="about-card-kv">
+              <span>Now</span>
+              <b>Demand Planner & Business Specialist</b>
+              <span className="muted">Asia Pulp & Paper · Specialty Paper BU</span>
+            </div>
+            <div className="about-card-kv">
+              <span>Building</span>
+              <b>Pintas</b>
+              <span className="muted">Stablecoin settlement rail</span>
+            </div>
+            <div className="about-card-kv">
+              <span>Trained</span>
+              <b>CS + MBA</b>
+              <span className="muted">Bina Nusantara · Prasetiya Mulya (Top 5)</span>
+            </div>
+          </div>
+        </div>
+        <div className="about-prose">
+          {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+Object.assign(window, { About });
+  </script>
+
+  <!-- Experience -->
+  <script type="text/babel">
+function Experience({ items }) {
+  const [open, setOpen] = React.useState(items[0]?.id);
+
+  return (
+    <section className="section" id="experience">
+      <SectionHeader number="02" label="Experience" />
+      <div className="exp-list">
+        {items.map((it, i) => (
+          <ExperienceCard key={it.id} item={it}
+            isFirst={i === 0} isLast={i === items.length - 1}
+            open={open === it.id}
+            onToggle={() => setOpen(open === it.id ? null : it.id)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ExperienceCard({ item, open, onToggle, isFirst, isLast }) {
+  return (
+    <div className={`exp-card ${open ? "is-open" : ""}`}>
+      <div className="exp-rail">
+        <span className={`exp-node ${isFirst ? "is-now" : ""}`} />
+        <span className={`exp-line ${isLast ? "is-last" : ""}`} />
+      </div>
+      <button className="exp-head" onClick={onToggle} aria-expanded={open}>
+        <div className="exp-head-l">
+          <div className="exp-period">{item.period}{item.location ? ` · ${item.location}` : ""}</div>
+          <div className="exp-company">{item.company}</div>
+          <div className="exp-role">{item.role}</div>
+        </div>
+        <div className="exp-head-r"><ChevronIcon open={open} /></div>
+      </button>
+      <div className="exp-body" style={{ display: open ? "block" : "none" }}>
+        <div className="exp-scope">{item.scope}</div>
+        <ol className="exp-outcomes">
+          {item.outcomes.map((o, i) => (
+            <li key={i}>
+              <span className="exp-num">{String(i + 1).padStart(2, "0")}</span>
+              <span>{o}</span>
+            </li>
+          ))}
+        </ol>
+        <div className="exp-stack">
+          {item.stack.map((s, i) => <span key={i} className="chip">{s}</span>)}
+        </div>
+      </div>
+    </div>
+  );
+}
+Object.assign(window, { Experience });
+  </script>
+
+  <!-- Projects + ProjectModal -->
+  <script type="text/babel">
+function VizPintas() {
+  return (
+    <svg viewBox="0 0 320 140" className="viz">
+      <defs>
+        <linearGradient id="p1" x1="0" x2="1">
+          <stop offset="0" stopColor="var(--accent)" stopOpacity=".0" />
+          <stop offset=".5" stopColor="var(--accent)" stopOpacity=".7" />
+          <stop offset="1" stopColor="var(--accent)" stopOpacity=".0" />
+        </linearGradient>
+      </defs>
+      <g fontFamily="var(--mono)" fontSize="9" fill="var(--text-dim)">
+        <text x="14" y="120">USD</text>
+        <text x="148" y="120" textAnchor="middle">USDC / USDT</text>
+        <text x="306" y="120" textAnchor="end">USD</text>
+      </g>
+      <circle cx="22"  cy="70" r="14" fill="none" stroke="var(--border-strong)" />
+      <circle cx="160" cy="70" r="14" fill="none" stroke="var(--accent)" />
+      <circle cx="298" cy="70" r="14" fill="none" stroke="var(--border-strong)" />
+      <line x1="36"  y1="70" x2="146" y2="70" stroke="url(#p1)" strokeWidth="1.2" />
+      <line x1="174" y1="70" x2="284" y2="70" stroke="url(#p1)" strokeWidth="1.2" />
+      <circle cx="22"  cy="70" r="3" fill="var(--text)" />
+      <circle cx="160" cy="70" r="3" fill="var(--accent)" />
+      <circle cx="298" cy="70" r="3" fill="var(--text)" />
+      <circle r="2.4" fill="var(--accent)">
+        <animate attributeName="cx" values="36;146" dur="2.2s" repeatCount="indefinite" />
+        <animate attributeName="cy" values="70;70"  dur="2.2s" repeatCount="indefinite" />
+      </circle>
+      <circle r="2.4" fill="var(--accent)">
+        <animate attributeName="cx" values="174;284" dur="2.2s" repeatCount="indefinite" />
+        <animate attributeName="cy" values="70;70"   dur="2.2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  );
+}
+
+function VizDashboard() {
+  const bars   = [42, 68, 55, 81, 60, 44, 73, 88, 51, 65];
+  const target = [55, 60, 60, 75, 65, 55, 70, 80, 60, 70];
+  return (
+    <svg viewBox="0 0 320 140" className="viz">
+      <g stroke="var(--border-soft)" strokeWidth=".5">
+        {[30, 60, 90, 120].map(y => <line key={y} x1="14" x2="306" y1={y} y2={y} />)}
+      </g>
+      {bars.map((b, i) => {
+        const x = 22 + i * 30;
+        return (
+          <g key={i}>
+            <rect x={x}      y={120 - b * 0.9}          width="14" height={b * 0.9}          fill="var(--accent)" opacity=".75" />
+            <rect x={x + 16} y={120 - target[i] * 0.9} width="6"  height={target[i] * 0.9} fill="var(--text-dim)" opacity=".4" />
+          </g>
+        );
+      })}
+      <text x="14" y="22" fontFamily="var(--mono)" fontSize="8" fill="var(--text-dim)">10 regions · OC vs target</text>
+    </svg>
+  );
+}
+
+function VizPermata() {
+  return (
+    <svg viewBox="0 0 320 140" className="viz">
+      <text x="14" y="22" fontFamily="var(--mono)" fontSize="8" fill="var(--text-dim)">switching cost · indexed</text>
+      <path d="M 14 35 L 70 38 L 120 60 L 170 85 L 230 110 L 306 119" fill="none" stroke="var(--text-dim)" strokeWidth="1" strokeDasharray="3 3" />
+      <path d="M 14 35 L 70 38 L 120 60 L 170 85 L 230 110 L 306 119" fill="none" stroke="var(--accent)" strokeWidth="1.6" />
+      <circle cx="14"  cy="35"  r="2.6" fill="var(--accent)" />
+      <circle cx="306" cy="119" r="2.6" fill="var(--accent)" />
+      <text x="22"  y="32"  fontFamily="var(--mono)" fontSize="9" fill="var(--text)">100</text>
+      <text x="280" y="116" fontFamily="var(--mono)" fontSize="9" fill="var(--accent)">2</text>
+    </svg>
+  );
+}
+
+function VizKos() {
+  return (
+    <svg viewBox="0 0 320 140" className="viz">
+      <text x="14" y="22" fontFamily="var(--mono)" fontSize="8" fill="var(--text-dim)">agent · whatsapp · sheets</text>
+      <rect x="14"  y="36" width="86" height="78" rx="4" fill="none" stroke="var(--border-strong)" />
+      <rect x="118" y="36" width="86" height="78" rx="4" fill="none" stroke="var(--accent)" />
+      <rect x="222" y="36" width="86" height="78" rx="4" fill="none" stroke="var(--border-strong)" />
+      <line x1="100" y1="75" x2="118" y2="75" stroke="var(--accent)" />
+      <line x1="204" y1="75" x2="222" y2="75" stroke="var(--accent)" />
+      <text x="57"  y="80" fontFamily="var(--mono)" fontSize="9" fill="var(--text-dim)" textAnchor="middle">WhatsApp</text>
+      <text x="161" y="80" fontFamily="var(--mono)" fontSize="9" fill="var(--accent)" textAnchor="middle">Claude</text>
+      <text x="265" y="80" fontFamily="var(--mono)" fontSize="9" fill="var(--text-dim)" textAnchor="middle">Sheets</text>
+    </svg>
+  );
+}
+
+function ProjectVisual({ id }) {
+  if (id === "pintas")    return <VizPintas />;
+  if (id === "dashboard") return <VizDashboard />;
+  if (id === "permata")   return <VizPermata />;
+  if (id === "kos")       return <VizKos />;
+  return null;
+}
+
+function Projects({ items, onOpen }) {
+  return (
+    <section className="section" id="projects">
+      <SectionHeader number="03" label="Selected work"
+        action={<span className="section-aside">Four flagship items · click for detail</span>} />
+      <div className="proj-grid">
+        {items.map((p) => (
+          <button key={p.id} className="proj-card" onClick={() => onOpen(p.id)}>
+            <div className="proj-card-top">
+              <span className="proj-kicker">{p.kicker}</span>
+              <span className="proj-tag">{p.accentLabel}</span>
+            </div>
+            <div className="proj-visual"><ProjectVisual id={p.id} /></div>
+            <div>
+              <h3 className="proj-title">{p.title}</h3>
+              <p className="proj-summary">{p.summary}</p>
+            </div>
+            <div className="proj-card-foot">
+              <span>Open case</span>
+              <ArrowIcon />
+            </div>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProjectModal({ project, onClose }) {
+  React.useEffect(() => {
+    if (!project) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => { document.body.style.overflow = ""; window.removeEventListener("keydown", onKey); };
+  }, [project, onClose]);
+
+  if (!project) return null;
+
+  return (
+    <div className="modal-scrim" onClick={onClose}>
+      <div className="modal-sheet" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+        <div className="modal-head">
+          <div className="modal-kicker">
+            <span className="proj-tag">{project.accentLabel}</span>
+            <span className="muted">{project.kicker}</span>
+          </div>
+          <button className="modal-close" onClick={onClose} aria-label="Close">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 3L11 11M11 3L3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+        <h2 className="modal-title">{project.title}</h2>
+        <p className="modal-summary">{project.summary}</p>
+        <div className="modal-visual"><ProjectVisual id={project.id} /></div>
+        <div className="modal-grid">
+          {[["Problem", project.problem], ["Approach", project.approach], ["Outcome", project.outcome]].map(([label, val]) => (
+            <div key={label} className="modal-field">
+              <div className="modal-field-label">{label}</div>
+              <div className="modal-field-value">{val}</div>
+            </div>
+          ))}
+        </div>
+        <div className="modal-stack">
+          <div className="modal-stack-label">Stack</div>
+          <div className="modal-stack-chips">
+            {project.stack.map((s, i) => <span key={i} className="chip">{s}</span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { Projects, ProjectModal, ProjectVisual });
+  </script>
+
+  <!-- Pintas -->
+  <script type="text/babel">
+function Pintas({ data, variant }) {
+  return (
+    <section className="section" id="pintas">
+      <SectionHeader number="04" label="Pintas — settlement flow"
+        action={<span className="section-aside">Signature interaction · hover the rail</span>} />
+      <div className="pintas-frame">
+        <div className="pintas-frame-head">
+          <div className="pintas-frame-head-l">
+            <span className="pintas-mark">PINTAS</span>
+            <span className="muted">B2B cross-border settlement — Indonesia → counterparty</span>
+          </div>
+          <div><span className="chip-mono">v0.4 · pilot</span></div>
+        </div>
+        {variant === "compare" && <PintasCompare data={data} />}
+        {variant === "ticker"  && <PintasTicker  data={data} />}
+        {(!variant || variant === "pipeline") && <PintasPipeline data={data} />}
+      </div>
+    </section>
+  );
+}
+
+function PintasPipeline({ data }) {
+  const [hover, setHover] = React.useState(null);
+  return (
+    <div className="pntp">
+      <div className="pntp-legs">
+        {data.legs.map((leg, i) => (
+          <React.Fragment key={leg.id}>
+            <div className={`pntp-leg ${hover === leg.id ? "is-hover" : ""}`}
+                 onMouseEnter={() => setHover(leg.id)} onMouseLeave={() => setHover(null)}>
+              <div className="pntp-leg-idx">{String(i + 1).padStart(2, "0")}</div>
+              <div className="pntp-leg-label">{leg.label}</div>
+              <div className="pntp-leg-detail">{leg.detail}</div>
+              <div className="pntp-node">
+                <span className="pntp-node-ring" />
+                <span className="pntp-node-dot" />
+              </div>
+            </div>
+            {i < data.legs.length - 1 && (
+              <div className="pntp-link">
+                <svg viewBox="0 0 200 24" preserveAspectRatio="none" className="pntp-link-svg">
+                  <line x1="0" y1="12" x2="200" y2="12" stroke="var(--border-strong)" strokeWidth="1" />
+                  {[0, 0.7, 1.4].map((begin, bi) => (
+                    <circle key={bi} r="3" fill="var(--accent)" opacity={bi === 0 ? 1 : bi === 1 ? .55 : .3}>
+                      <animate attributeName="cx" values="0;200" dur="2.2s" begin={`${begin}s`} repeatCount="indefinite" />
+                      <animate attributeName="cy" values="12;12" dur="2.2s" begin={`${begin}s`} repeatCount="indefinite" />
+                    </circle>
+                  ))}
+                </svg>
+              </div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      <div className="pntp-foot">
+        <div className="pntp-foot-cell"><div className="muted">Settlement</div><div className="pntp-foot-val accent">~ minutes</div></div>
+        <div className="pntp-foot-cell"><div className="muted">Fees</div><div className="pntp-foot-val">≈ {data.pintasRail.fee}</div></div>
+        <div className="pntp-foot-cell"><div className="muted">FX uplift</div><div className="pntp-foot-val">{data.pintasRail.lift}</div></div>
+        <div className="pntp-foot-cell"><div className="muted">Coverage</div><div className="pntp-foot-val">TransFi · Zero Hash</div></div>
+      </div>
+    </div>
+  );
+}
+
+function PintasCompare({ data }) {
+  return (
+    <div className="pntc">
+      <div className="pntc-col">
+        <div className="pntc-col-head">
+          <span className="pntc-tag pntc-tag-old">Legacy</span>
+          <span className="pntc-col-name">SWIFT correspondent</span>
+        </div>
+        {[
+          ["Time to settle", "3–5 days", 1.00, "dim"],
+          ["Fee per transfer", data.swift.fee, 0.85, "dim"],
+          ["FX spread", data.swift.lift, 0.95, "dim"],
+        ].map(([label, value, pct, tone]) => (
+          <div key={label} className="cmpr">
+            <div className="cmpr-l">{label}</div>
+            <div className="cmpr-bar"><span className={`cmpr-fill cmpr-${tone}`} style={{ width: (pct * 100) + "%" }} /></div>
+            <div className={`cmpr-v`}>{value}</div>
+          </div>
+        ))}
+        <div className="pntc-foot muted">Opaque routing through correspondent chain. Cost surfaces on reconciliation.</div>
+      </div>
+      <div className="pntc-arrow">
+        <div className="pntc-arrow-line" />
+        <div className="pntc-arrow-tip">→</div>
+      </div>
+      <div className="pntc-col pntc-col-new">
+        <div className="pntc-col-head">
+          <span className="pntc-tag pntc-tag-new">Pintas rail</span>
+          <span className="pntc-col-name">Stablecoin settlement</span>
+        </div>
+        {[
+          ["Time to settle", "minutes", 0.04, "accent"],
+          ["Fee per transfer", data.pintasRail.fee, 0.18, "accent"],
+          ["FX spread", data.pintasRail.lift, 0.30, "accent"],
+        ].map(([label, value, pct, tone]) => (
+          <div key={label} className="cmpr">
+            <div className="cmpr-l">{label}</div>
+            <div className="cmpr-bar"><span className={`cmpr-fill cmpr-${tone}`} style={{ width: (pct * 100) + "%" }} /></div>
+            <div className={`cmpr-v cmpr-${tone}`}>{value}</div>
+          </div>
+        ))}
+        <div className="pntc-foot muted">USD on-ramp → USDC/USDT corridor → USD off-ramp. Receiver sees USD only.</div>
+      </div>
+    </div>
+  );
+}
+
+function PintasTicker({ data }) {
+  const [t, setT] = React.useState(0);
+  React.useEffect(() => {
+    const id = setInterval(() => setT((x) => x + 1), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const cycle = 12;
+  const phase = t % cycle;
+  const stage = phase < 2 ? 0 : phase < 8 ? 1 : phase < 11 ? 2 : 3;
+  const stageNames = ["Initiated", "Stablecoin leg", "Off-ramp", "Settled"];
+  const elapsed = (phase + 1).toFixed(0);
+
+  return (
+    <div className="pntt">
+      <div className="pntt-top">
+        {[
+          ["Reference",  <span className="mono">PTX-{(10240 + Math.floor(t / cycle)).toString().padStart(6, "0")}</span>],
+          ["Sender",     "Indonesian exporter · USD"],
+          ["Receiver",   "Counterparty bank · USD"],
+          ["Notional",   <span className="mono">USD 248,500.00</span>],
+        ].map(([label, val]) => (
+          <div key={label} className="pntt-top-cell">
+            <div className="muted">{label}</div>
+            <div>{val}</div>
+          </div>
+        ))}
+      </div>
+      <div className="pntt-stages">
+        {stageNames.map((name, i) => (
+          <div key={i} className={`pntt-stage ${i <= stage ? "is-done" : ""} ${i === stage ? "is-now" : ""}`}>
+            <span className="pntt-stage-dot" />
+            <span className="pntt-stage-name">{name}</span>
+            <span className="pntt-stage-time mono">{i <= stage ? "00:0" + Math.min(9, i * 3) : "—"}</span>
+          </div>
+        ))}
+      </div>
+      <div className="pntt-bottom">
+        <div className="pntt-bottom-cell">
+          <div className="muted">Pintas — elapsed</div>
+          <div className="pntt-big accent mono">00:{elapsed.padStart(2, "0")}</div>
+        </div>
+        <div className="pntt-bottom-cell">
+          <div className="muted">SWIFT equivalent</div>
+          <div className="pntt-big mono">{((phase + 1) * 0.05).toFixed(2)}d <span className="muted small">/ ~3.5d typical</span></div>
+        </div>
+        <div className="pntt-bottom-cell">
+          <div className="muted">Fee delta</div>
+          <div className="pntt-big mono accent">−82%</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { Pintas });
+  </script>
+
+  <!-- Capabilities + Contact -->
+  <script type="text/babel">
+function Capabilities({ data }) {
+  const cols = [data.strategy, data.build, data.operating];
+  return (
+    <section className="section" id="capabilities">
+      <SectionHeader number="05" label="Capabilities" />
+      <div className="caps-grid">
+        {cols.map((c, i) => (
+          <div key={i} className="caps-col">
+            <div className="caps-col-head">
+              <span className="caps-col-num">{String(i + 1).padStart(2, "0")}</span>
+              <span className="caps-col-label">{c.label}</span>
+            </div>
+            <ul className="caps-list">
+              {c.items.map((it, j) => (
+                <li key={j}><span className="caps-tick">/</span><span>{it}</span></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Contact({ person }) {
+  const [copied, setCopied] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [from, setFrom] = React.useState("");
+  const [msg, setMsg]   = React.useState("");
+  const [sent, setSent] = React.useState(false);
+
+  const copy = () => {
+    navigator.clipboard?.writeText(person.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1600);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const body    = encodeURIComponent(`${msg}\n\n— ${name}\n${from}`);
+    const subject = encodeURIComponent(`Hello from ${name || "your site"}`);
+    window.location.href = `mailto:${person.email}?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+
+  return (
+    <section className="section" id="contact">
+      <SectionHeader number="06" label="Contact" />
+      <div className="contact-grid">
+        <div className="contact-prose">
+          <h3 className="contact-headline">Looking for senior operator, RevOps, product, or founder-track conversations.</h3>
+          <p className="muted">Best reached over email. I read everything; I reply to most.</p>
+          <div className="contact-actions">
+            <button className="btn btn-primary" onClick={copy}>
+              {copied ? "Copied" : person.email}
+              {!copied && <ArrowIcon />}
+            </button>
+            <a className="btn btn-ghost" href={person.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+            <a className="btn btn-ghost" href={person.github}   target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+
+        <form className="contact-form" onSubmit={onSubmit}>
+          <div className="contact-form-row">
+            <label>Name</label>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" />
+          </div>
+          <div className="contact-form-row">
+            <label>Email</label>
+            <input type="email" value={from} onChange={(e) => setFrom(e.target.value)} placeholder="you@company.com" />
+          </div>
+          <div className="contact-form-row">
+            <label>Message</label>
+            <textarea rows="4" value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="What you're working on. Short is fine." />
+          </div>
+          <button className="btn btn-primary contact-send" type="submit">
+            {sent ? "Opening mail…" : "Send"} <ArrowIcon />
+          </button>
+          <div className="muted small">Falls back to mailto. No tracking, no form backend.</div>
+        </form>
+      </div>
+
+      <footer className="site-foot">
+        <div className="muted small">© {new Date().getFullYear()} {person.name} · {person.location}</div>
+        <div className="muted small mono">last build · {new Date().toLocaleDateString("en-CA")}</div>
+      </footer>
+    </section>
+  );
+}
+
+Object.assign(window, { Capabilities, Contact });
+  </script>
+
+  <!-- App root -->
+  <script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "#1f7a6b",
+  "type": "inter",
+  "dark": true,
+  "density": "regular",
+  "pintasVariant": "pipeline"
+}/*EDITMODE-END*/;
+
+const ACCENT_PRESETS = ["#1f7a6b", "#d97706", "#b45309", "#8b6f3f"];
+
+const TYPE_PRESETS = {
+  inter:   { sans: '"Inter", ui-sans-serif, system-ui, sans-serif',         display: '"Inter", ui-sans-serif, system-ui, sans-serif' },
+  geist:   { sans: '"Geist", "Inter", ui-sans-serif, system-ui, sans-serif', display: '"Geist", "Inter", ui-sans-serif, system-ui, sans-serif' },
+  ibmplex: { sans: '"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif',  display: '"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif' },
+};
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const C = window.PORTFOLIO_CONTENT;
+  const [openProject, setOpenProject] = React.useState(null);
+
+  React.useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty("--accent", t.accent);
+    root.dataset.theme   = t.dark ? "dark" : "light";
+    root.dataset.density = t.density;
+    const fonts = TYPE_PRESETS[t.type] || TYPE_PRESETS.inter;
+    root.style.setProperty("--sans",    fonts.sans);
+    root.style.setProperty("--display", fonts.display);
+  }, [t.accent, t.dark, t.density, t.type]);
+
+  const project = C.projects.find((p) => p.id === openProject);
+
+  return (
+    <div className="root">
+      <Nav person={C.person} />
+      <main className="main">
+        <Hero     person={C.person} metrics={C.metrics} />
+        <About    paragraphs={C.about} />
+        <Experience items={C.experience} />
+        <Projects   items={C.projects} onOpen={setOpenProject} />
+        <Pintas     data={C.pintas} variant={t.pintasVariant} />
+        <Capabilities data={C.capabilities} />
+        <Contact    person={C.person} />
+      </main>
+
+      <ProjectModal project={project} onClose={() => setOpenProject(null)} />
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="Theme" />
+        <TweakToggle label="Dark mode" value={t.dark} onChange={(v) => setTweak('dark', v)} />
+        <TweakColor  label="Accent" value={t.accent} options={ACCENT_PRESETS} onChange={(v) => setTweak('accent', v)} />
+        <TweakSection label="Typography" />
+        <TweakRadio  label="Family"  value={t.type}    options={["inter", "geist", "ibmplex"]} onChange={(v) => setTweak('type', v)} />
+        <TweakRadio  label="Density" value={t.density} options={["compact", "regular", "comfy"]} onChange={(v) => setTweak('density', v)} />
+        <TweakSection label="Pintas — signature interaction" />
+        <TweakRadio  label="Variant" value={t.pintasVariant} options={["pipeline", "compare", "ticker"]} onChange={(v) => setTweak('pintasVariant', v)} />
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
