@@ -602,6 +602,28 @@ window.PORTFOLIO_CONTENT = {
       accentLabel: "Strategy",
     },
     {
+      id: "lovebonito",
+      title: "Love Bonito — Retail Expansion",
+      kicker: "Interview case — retail expansion financial model",
+      summary: "Built a market-entry financial model evaluating retail expansion into a new country for Love Bonito. Model output supported proceeding with the expansion.",
+      problem: "Love Bonito needed a rigorous go / no-go decision framework for entering a new retail market. The core question was whether the unit economics of a physical retail footprint in the target country could generate acceptable returns given market size, competitive dynamics, and capital required.",
+      approach: "Modelled store-level P&L from the ground up — revenue build from traffic, conversion, and basket assumptions; cost structure covering lease, headcount, and logistics; payback period and IRR across bear / base / bull scenarios. Layered in market sizing and competitive density to stress-test the addressable opportunity.",
+      outcome: "Model supported a go recommendation. The base-case unit economics cleared the return threshold, and the bear case remained recoverable within a reasonable payback window.",
+      stack: ["Financial modelling", "Unit economics", "Market sizing", "Scenario analysis", "Retail P&L"],
+      accentLabel: "Strategy",
+    },
+    {
+      id: "cdi",
+      title: "CDI (CDIA) — EV Multiple Uplift Proposal",
+      kicker: "Interview case — listed equity, IDX: CDIA",
+      summary: "Investment proposal to deploy CDI's cash reserves into value-creating activities, targeting a 4x uplift in EV multiples for the publicly listed entity on the Indonesia Stock Exchange.",
+      problem: "CDI (ticker: CDIA on IDX) was trading at compressed EV multiples relative to its cash position — the market was not ascribing value to idle cash on the balance sheet. The assignment was to construct an investment case that would close that gap.",
+      approach: "Identified deployable cash quantum and mapped it against investment vectors with the highest probability of multiple re-rating: operating assets that generate recurring EBITDA, adjacencies that expand the addressable market, and structural moves that improve the equity story for institutional investors. Sized each scenario and modelled the implied EV impact.",
+      outcome: "Proposal demonstrated a credible path to 4x EV multiple expansion through disciplined capital deployment — shifting the market narrative from cash-heavy holdco to active value compounder.",
+      stack: ["EV / EBITDA modelling", "Capital allocation", "Public equity analysis", "IDX listed entity", "Investment thesis"],
+      accentLabel: "Strategy",
+    },
+    {
       id: "kos",
       title: "Boarding House Management System",
       kicker: "AI-native proof — family kos",
@@ -1285,11 +1307,70 @@ function VizKos() {
   );
 }
 
+function VizLoveBonito() {
+  const scenarios = [
+    { label: "Bear", irr: 28, payback: 32, color: "var(--text-dim)" },
+    { label: "Base", irr: 52, payback: 62, color: "var(--accent)" },
+    { label: "Bull", irr: 78, payback: 88, color: "var(--accent)" },
+  ];
+  return (
+    <svg viewBox="0 0 320 140" className="viz">
+      <text x="14" y="18" fontFamily="var(--mono)" fontSize="8" fill="var(--text-dim)">retail expansion · scenario model</text>
+      <g stroke="var(--border-soft)" strokeWidth=".5">
+        {[40, 70, 100, 130].map(y => <line key={y} x1="14" x2="306" y1={y} y2={y} />)}
+      </g>
+      {scenarios.map((s, i) => {
+        const x = 48 + i * 88;
+        return (
+          <g key={s.label}>
+            <rect x={x} y={130 - s.irr} width="22" height={s.irr} fill={s.color} opacity={i === 0 ? .35 : .8} rx="2" />
+            <rect x={x + 26} y={130 - s.payback} width="22" height={s.payback} fill={s.color} opacity={i === 0 ? .2 : .4} rx="2" />
+            <text x={x + 22} y="138" fontFamily="var(--mono)" fontSize="8" fill="var(--text-dim)" textAnchor="middle">{s.label}</text>
+          </g>
+        );
+      })}
+      <text x="14" y="132" fontFamily="var(--mono)" fontSize="7" fill="var(--text-dim)">IRR</text>
+      <text x="40" y="132" fontFamily="var(--mono)" fontSize="7" fill="var(--text-dim)">/ payback</text>
+      <text x="232" y="28" fontFamily="var(--mono)" fontSize="9" fill="var(--accent)">GO</text>
+    </svg>
+  );
+}
+
+function VizCDI() {
+  const bars = [
+    { label: "Current EV", val: 25, color: "var(--text-dim)", accent: false },
+    { label: "Cash deploy", val: 48, color: "var(--accent)",   accent: true },
+    { label: "EBITDA re-rate", val: 72, color: "var(--accent)", accent: true },
+    { label: "Target EV", val: 100, color: "var(--accent)",  accent: true },
+  ];
+  return (
+    <svg viewBox="0 0 320 140" className="viz">
+      <text x="14" y="18" fontFamily="var(--mono)" fontSize="8" fill="var(--text-dim)">EV multiple uplift · 4x target</text>
+      <g stroke="var(--border-soft)" strokeWidth=".5">
+        {[40, 70, 100, 130].map(y => <line key={y} x1="14" x2="306" y1={y} y2={y} />)}
+      </g>
+      {bars.map((b, i) => {
+        const x = 24 + i * 72;
+        const h = b.val * 0.9;
+        return (
+          <g key={b.label}>
+            <rect x={x} y={130 - h} width="44" height={h} fill={b.color} opacity={b.accent ? .75 : .35} rx="2" />
+            <text x={x + 22} y="138" fontFamily="var(--mono)" fontSize="7" fill="var(--text-dim)" textAnchor="middle">{b.label.split(' ')[0]}</text>
+          </g>
+        );
+      })}
+      <text x="270" y="38" fontFamily="var(--mono)" fontSize="9" fill="var(--accent)">4×</text>
+    </svg>
+  );
+}
+
 function ProjectVisual({ id }) {
-  if (id === "pintas")    return <VizPintas />;
-  if (id === "dashboard") return <VizDashboard />;
-  if (id === "permata")   return <VizPermata />;
-  if (id === "kos")       return <VizKos />;
+  if (id === "pintas")      return <VizPintas />;
+  if (id === "dashboard")   return <VizDashboard />;
+  if (id === "permata")     return <VizPermata />;
+  if (id === "kos")         return <VizKos />;
+  if (id === "lovebonito")  return <VizLoveBonito />;
+  if (id === "cdi")         return <VizCDI />;
   return null;
 }
 
